@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>kan.eazyy | Tech Solutions</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <section id="authView" class="auth-view">
+    <form id="authForm" class="auth-card">
+      <div class="brand-mark">k<span>.</span></div>
+      <p class="eyebrow">TU ESPACIO DE TRABAJO ♡</p>
+      <h1>kan<span class="pink">.</span>eazyy</h1>
+      <p class="muted">Organiza el trabajo y avanza a tu ritmo.</p>
+
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab active" data-mode="login">Iniciar sesión</button>
+        <button type="button" class="auth-tab" data-mode="register">Crear cuenta</button>
+      </div>
+
+      <label class="field" id="nameWrap" hidden>
+        Nombre
+        <input id="authName" placeholder="Tu nombre">
+      </label>
+
+      <label class="field">
+        Correo electrónico
+        <input id="authEmail" type="email" required placeholder="tu@correo.com">
+      </label>
+
+      <label class="field">
+        Contraseña
+        <input id="authPassword" type="password" required minlength="4" placeholder="Mínimo 4 caracteres">
+      </label>
+
+      <button class="btn btn-primary full" id="authSubmit">Entrar a mi tablero ♡</button>
+
+      <p class="small muted">
+        Prototipo académico: acceso simulado y guardado solo en este navegador.
+        No uses contraseñas reales.
+      </p>
+    </form>
+
+    <div class="auth-decoration">
+      ♡<br>
+      <b>one task<br>at a time</b> ✦
+    </div>
+  </section>
+
+  <div id="appView" hidden>
+    <header class="topbar">
+      <a class="brand" href="#">
+        <span class="brand-icon">k<span>.</span></span>
+        <span class="brand-name">
+          kan<span>.</span>eazyy
+          <small>your tasks, your pace ♡</small>
+        </span>
+      </a>
+
+      <div class="top-actions">
+        <span class="workspace">● Tech Solutions · Proyecto Kanban</span>
+        <span id="userChip" class="user-chip">TS</span>
+        <button class="btn btn-soft" id="themeToggle" type="button"
+          aria-label="Activar modo oscuro" title="Cambiar tema">🌙 Modo oscuro</button>
+        <button class="btn btn-soft" id="logout">Salir</button>
+        <button class="btn btn-primary" id="newTask">＋ Nueva tarea</button>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="welcome">
+        <div>
+          <p class="eyebrow">UN PASITO A LA VEZ ✿</p>
+          <h1 id="welcome">¡Hola! Vamos a organizarnos<span class="pink">.</span></h1>
+          <p class="muted">
+            Tablero PB01–PB15 alineado con las tarjetas del proyecto
+            y la evidencia de pruebas.
+          </p>
+        </div>
+        <div class="sticker">♡<br><b>you've got this!</b></div>
+      </section>
+
+      <section class="stats">
+        <article class="stat">
+          <span>Tarjetas totales ♡</span>
+          <strong id="total">15</strong>
+          <small>PB01–PB15</small>
+        </article>
+        <article class="stat">
+          <span>En proceso ✿</span>
+          <strong id="progress">0</strong>
+          <small>Límite WIP: 5 / 3 / 2</small>
+        </article>
+        <article class="stat">
+          <span>Completadas ✓</span>
+          <strong id="done">0</strong>
+          <small>Después de verificar</small>
+        </article>
+        <article class="stat">
+          <span>Vencidas !</span>
+          <strong id="overdue">0</strong>
+          <small>Revisar fecha límite</small>
+        </article>
+      </section>
+
+      <section class="toolbar">
+        <div>
+          <p class="eyebrow">TABLERO DEL PROYECTO</p>
+          <h2>Mi tablero <span class="pink">✿</span></h2>
+        </div>
+        <div class="filters">
+          <input id="search" placeholder="Buscar PB o tarea...">
+          <select id="priorityFilter">
+            <option value="all">Todas las prioridades</option>
+            <option>Alta</option>
+            <option>Media</option>
+            <option>Baja</option>
+          </select>
+          <select id="assigneeFilter">
+            <option value="all">Todos los responsables</option>
+            <option>Integrante 1</option>
+            <option>Integrante 2</option>
+            <option>Integrante 3</option>
+            <option>Integrante 4</option>
+            <option>Integrante 5</option>
+          </select>
+        </div>
+      </section>
+
+      <p class="small muted">
+        Arrastra tarjetas entre columnas o usa “Mover”.
+        Los límites WIP se validan al cambiar de etapa.
+      </p>
+
+      <section id="board" class="board"></section>
+
+      <section class="panels">
+        <article class="panel">
+          <p class="eyebrow">DEFINICIÓN DE HECHO</p>
+          <h3>Checklist para cerrar una tarjeta</h3>
+          <ul>
+            <li>La función está implementada.</li>
+            <li>Se realizaron las pruebas correspondientes.</li>
+            <li>Se guardó evidencia para el documento.</li>
+            <li>El resultado fue revisado antes de mover a Done.</li>
+          </ul>
+        </article>
+
+        <article class="panel">
+          <p class="eyebrow">CAPACIDAD DEL EQUIPO</p>
+          <h3>Límites WIP</h3>
+          <div id="wipRows"></div>
+          <p class="small muted">
+            Si una columna llega al límite, primero termina o mueve una tarjeta.
+          </p>
+        </article>
+      </section>
+
+      <section class="panel evidence">
+        <p class="eyebrow">PARA TU DOCUMENTO</p>
+        <h3>Registro de pruebas y evidencias</h3>
+        <p class="muted small">
+          Registra el caso probado, su resultado y la referencia de la captura.
+        </p>
+
+        <div class="evidence-form">
+          <label class="field">
+            Tarjeta
+            <select id="eTask"></select>
+          </label>
+          <label class="field">
+            Prueba realizada
+            <input id="eTest" placeholder="Ej. Intentar guardar sin título">
+          </label>
+          <label class="field">
+            Resultado
+            <select id="eResult">
+              <option>Aprobada</option>
+              <option>Fallida</option>
+              <option>Pendiente</option>
+            </select>
+          </label>
+          <label class="field">
+            Evidencia / observaciones
+            <input id="eNote" placeholder="Ej. Captura 03: formulario">
+          </label>
+          <button class="btn btn-primary" id="saveEvidence">Guardar registro</button>
+        </div>
+
+        <div id="eList" class="e-list"></div>
+      </section>
+
+      <footer>
+        Hecho con ♡ en kan.eazyy
+        <span>Prototipo académico · Tech Solutions S.A. de C.V.</span>
+      </footer>
+    </main>
+  </div>
+
+  <dialog id="taskDialog">
+    <form id="taskForm">
+      <div class="dialog-head">
+        <div>
+          <p class="eyebrow">TARJETA DE TRABAJO ♡</p>
+          <h2 id="dialogTitle">Nueva tarjeta</h2>
+        </div>
+        <button type="button" id="close" class="close">×</button>
+      </div>
+
+      <input id="taskId" type="hidden">
+
+      <label class="field">
+        Código PB (opcional)
+        <input id="taskCode" placeholder="Ej. PB16">
+      </label>
+      <label class="field">
+        Nombre de la tarea *
+        <input id="taskTitle" required maxlength="100">
+      </label>
+      <label class="field">
+        Descripción / criterio de aceptación
+        <textarea id="taskDesc" rows="3" placeholder="Qué se hará y cómo se comprobará"></textarea>
+      </label>
+
+      <div class="form-row">
+        <label class="field">
+          Responsable
+          <select id="taskAssignee" required>
+            <option value="">Elige a alguien</option>
+            <option>Integrante 1</option>
+            <option>Integrante 2</option>
+            <option>Integrante 3</option>
+            <option>Integrante 4</option>
+            <option>Integrante 5</option>
+          </select>
+        </label>
+        <label class="field">
+          Prioridad
+          <select id="taskPriority">
+            <option>Alta</option>
+            <option selected>Media</option>
+            <option>Baja</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="form-row">
+        <label class="field">
+          Etapa
+          <select id="taskStatus">
+            <option value="backlog">Backlog</option>
+            <option value="todo">To Do</option>
+            <option value="progress">In Progress</option>
+            <option value="testing">Testing</option>
+            <option value="done">Done</option>
+          </select>
+        </label>
+        <label class="field">
+          Fecha límite
+          <input id="taskDue" type="date">
+        </label>
+      </div>
+
+      <label class="field">
+        Evidencia / notas de implementación
+        <textarea id="taskEvidence" rows="2"></textarea>
+      </label>
+
+      <p class="small muted">
+        No marques una tarjeta como terminada hasta comprobar el criterio
+        de aceptación y registrar su evidencia.
+      </p>
+
+      <div class="dialog-actions">
+        <button type="button" id="cancel" class="btn btn-soft">Cancelar</button>
+        <button class="btn btn-primary">Guardar tarjeta ♡</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status"></div>
+  <script src="script.js"></script>
+</body>
+</html>
